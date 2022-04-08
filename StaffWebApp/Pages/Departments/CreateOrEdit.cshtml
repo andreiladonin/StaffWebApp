@@ -1,0 +1,29 @@
+﻿@page "{id?}"
+@model StaffWebApp.Pages.Departments.CreateOrEditModel
+@{
+    if (@Model.Id == 0)
+    {
+       <h2>Добавление Отдела</h2>
+    }else
+    {
+       <h2>Редактирование Отдела</h2>  
+    }
+
+    <form method="post">
+      <div class="mb-3">
+        <label asp-for="Department.Name" class="form-label"></label>
+        <input asp-for="Department.Name" class="form-control">
+        <span asp-validation-for="Department.Name" class="text-danger"></span>
+      </div>
+      @if (@Model.Id == 0)
+        {
+            <input type="submit" class="btn btn-primary w-100" value="Добавить" />
+        }
+        else
+        {
+            <input type="hidden" asp-for="Department.Id" />
+            <input type="submit" class="btn btn-primary w-100" value="Изменить" />
+        }
+      
+    </form>
+}

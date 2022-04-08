@@ -1,0 +1,49 @@
+﻿@page
+@model StaffWebApp.Pages.IndexModel
+@{
+    <h2 class="mb-5">Главная Страница</h2>
+
+    <a asp-page="CreateOrEdit" asp-route-id="" class="btn btn-primary mb-5">Добавить нового сотрудника</a>
+
+    @if (@Model.Employees.Count != 0)
+    {
+        <table class="table table-info">
+            <thead>
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Имя</th>
+                    <th scope="col">Отчество</th>
+                    <th scope="col">Фаммилия</th>
+                    <th scope="col">Дата рождения</th>
+                    <th scope="col">Адрес Проживания</th>
+                    <th scope="col">Отдел</th>
+                    <th scope="col">Редактирование</th>
+                    <th scope="col">Удаление Сотрудника</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var items in @Model.Employees)
+                {
+                    <tr>
+                        <th scope="row">@items.Id</th>
+                        <td>@items.Name</td>
+                        <td>@items.LastName</td>
+                        <td>@items.Patronymic</td>
+                        <td>@items.DateOfBirthday.ToString("MM.dd.yyyy")</td>
+                        <td>@items.Location</td>
+                        <td>@items.Department.Name</td>
+                        <td><a asp-page="CreateOrEdit" asp-page-handler="ById" asp-route-id="@items.Id" class="btn btn-primary">Редактировать</a></td>
+                        <td>
+                            <form method='post'>
+                              <button type="submit" asp-page-handler="delete" asp-route-id="@items.Id" class="btn btn-danger">Удалить</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    } else
+    {
+        <p>Нет Данных</p>
+    }
+}

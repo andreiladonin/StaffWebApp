@@ -1,0 +1,39 @@
+﻿@page "/departments"
+@model StaffWebApp.Pages.DepartamentModel
+@{
+    <h2 class="mb-5" >Отделы</h2>
+
+    <a asp-page="CreateOrEdit" asp-route-id="" class="btn btn-primary mb-5">Добавить новый отдел</a>
+
+    @if (@Model.departments.Count != 0)
+    {
+        <table class="table table-info">
+            <thead>
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Название</th>
+                    <th scope="col">Редактирование</th>
+                    <th scope="col">Удаление Отдела</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var items in @Model.departments)
+                {
+                    <tr>
+                        <th scope="row">@items.Id</th>
+                        <td>@items.Name</td>
+                        <td><a asp-page="CreateOrEdit" asp-page-handler="ById" asp-route-id="@items.Id" class="btn btn-primary">Редактировать</a></td>
+                        <td>
+                            <form method='post'>
+                              <button type="submit" asp-page-handler="delete" asp-route-id="@items.Id" class="btn btn-danger">Удалить</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    } else
+    {
+        <p>Нет Данных</p>
+    }
+}

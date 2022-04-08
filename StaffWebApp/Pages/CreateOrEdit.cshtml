@@ -1,0 +1,55 @@
+﻿@page "{id?}"
+@model StaffWebApp.Pages.CreateOrEditModel
+@{
+    if (@Model.Id == 0)
+    {
+       <h2>Добавление Cотрудника</h2>
+    }else
+    {
+       <h2>Редактирование</h2>  
+    }
+
+    <form method="post">
+      <div class="mb-3">
+        <label asp-for="Employee.Name" class="form-label"></label>
+        <input asp-for="Employee.Name" class="form-control">
+        <span asp-validation-for="Employee.Name" class="text-danger"></span>
+      </div>
+      <div class="mb-3">
+        <label asp-for="Employee.LastName" class="form-label"></label>
+        <input asp-for="Employee.LastName" class="form-control">
+        <span asp-validation-for="Employee.LastName" class="text-danger"></span>
+      </div>
+      <div class="mb-3">
+        <label asp-for="Employee.Patronymic" class="form-label"></label>
+        <input asp-for="Employee.Patronymic" class="form-control">
+        <span asp-validation-for="Employee.Patronymic" class="text-danger"></span>
+      </div>
+      <div class="mb-3">
+        <label asp-for="Employee.DateOfBirthday" class="form-label"></label>
+        <input asp-for="Employee.DateOfBirthday" class="form-control">
+        <span asp-validation-for="Employee.DateOfBirthday" class="text-danger"></span>
+      </div>
+      <div class="mb-3">
+        <label asp-for="Employee.Location" class="form-label"></label>
+        <input asp-for="Employee.Location" class="form-control">
+        <span asp-validation-for="Employee.Location" class="text-danger"></span>
+      </div>
+      <div class="mb-3">
+            <label asp-for="Employee.DepartmentId"></label>
+            @*выпадающий список с помощью asp-items*@
+            <select asp-for="Employee.DepartmentId" asp-items="@Model.DepartmentSelectLists" class="form-control">
+            </select>
+            <span asp-validation-for="Employee.DepartmentId" class="text-danger"></span>
+      </div>
+          @if (@Model.Id == 0)
+            {
+                <input type="submit" class="btn btn-primary w-100" value="Добавить" />
+            }
+            else
+            {
+                <input type="hidden" asp-for="Employee.Id" />
+                <input type="submit" class="btn btn-primary w-100" value="Изменить" />
+            }
+    </form>
+}
