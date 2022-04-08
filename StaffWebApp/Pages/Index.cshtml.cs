@@ -56,7 +56,8 @@ namespace StaffWebApp.Pages
             {
                 SortState.NameAsc => employees.OrderBy(e => e.Name),
                 SortState.LastNameAsc => employees.OrderBy(e => e.LastName),
-                SortState.DepartmentAsc => employees.OrderBy(e => e.Department.Name)
+                SortState.DepartmentAsc => employees.OrderBy(e => e.Department.Name),
+                SortState.Default => employees
             };
 
 

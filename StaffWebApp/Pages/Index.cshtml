@@ -1,4 +1,4 @@
-﻿@page "{handler?}/{name?}/{last_name?}/{department?}"
+﻿@page "{handler?}/{name?}/{last_name?}/{department?}/{sort?}"
 @model StaffWebApp.Pages.IndexModel
 @{
     <h2 class="mb-5">Главная Страница</h2>
@@ -17,19 +17,19 @@
                 <select name="department" asp-items="@Model.DepartmentSelectLists" class="form-control"></select>
                 <p>Сортировка</p>
                 <div class="form-check">
-                    <input class="form-check-input" type="radio" name="SortState" value="NameAsc" id="sorting">
+                    <input class="form-check-input" type="radio" name="sort" value="NameAsc" id="sorting">
                     <label class="form-check-label" for="sorting">
                        По имени
                     </label>
                  </div>
                  <div class="form-check">
-                    <input class="form-check-input" type="radio" name="SortState" value="LastNameAsc" id="sorting">
+                    <input class="form-check-input" type="radio" name="sort" value="LastNameAsc" id="sorting">
                     <label class="form-check-label" for="sorting">
                        По фамилии
                     </label>
                  </div>
                  <div class="form-check">
-                     <input class="form-check-input" type="radio" name="SortState" value="DepartmentAsc" id="sorting">
+                     <input class="form-check-input" type="radio" name="sort" value="DepartmentAsc" id="sorting">
                     <label class="form-check-label" for="sorting">
                        По отделу
                     </label>
