@@ -1,4 +1,4 @@
-﻿@page
+﻿@page "{handler?}/{name?}/{last_name?}/{department?}"
 @model StaffWebApp.Pages.IndexModel
 @{
     <h2 class="mb-5">Главная Страница</h2>
@@ -7,13 +7,43 @@
 
     @if (@Model.Employees.Count != 0)
     {
-        <table class="table table-info">
+        <form method="get">
+            <div class="form-inline form-group">
+                <label class="control-label">Имя: </label>
+                <input name="name" class="form-control" />
+                <label class="control-label">Фамилия: </label>
+                <input name="last_name" class="form-control" />
+                <label class="control-label">Отдел: </label>
+                <select name="department" asp-items="@Model.DepartmentSelectLists" class="form-control"></select>
+                <p>Сортировка</p>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="SortState" value="NameAsc" id="sorting">
+                    <label class="form-check-label" for="sorting">
+                       По имени
+                    </label>
+                 </div>
+                 <div class="form-check">
+                    <input class="form-check-input" type="radio" name="SortState" value="LastNameAsc" id="sorting">
+                    <label class="form-check-label" for="sorting">
+                       По фамилии
+                    </label>
+                 </div>
+                 <div class="form-check">
+                     <input class="form-check-input" type="radio" name="SortState" value="DepartmentAsc" id="sorting">
+                    <label class="form-check-label" for="sorting">
+                       По отделу
+                    </label>
+                </div>
+                <button asp-page-handler="Filter" type="submit" class="btn btn-primary">Поиск</button>
+            </div>
+        </form>
+        <table class="table table-info mt-4">
             <thead>
                 <tr>
                     <th scope="col">Id</th>
                     <th scope="col">Имя</th>
+                    <th scope="col">Фамилия</th>
                     <th scope="col">Отчество</th>
-                    <th scope="col">Фаммилия</th>
                     <th scope="col">Дата рождения</th>
                     <th scope="col">Адрес Проживания</th>
                     <th scope="col">Отдел</th>

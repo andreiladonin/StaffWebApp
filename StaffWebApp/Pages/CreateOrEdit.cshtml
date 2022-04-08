@@ -37,7 +37,6 @@
       </div>
       <div class="mb-3">
             <label asp-for="Employee.DepartmentId"></label>
-            @*выпадающий список с помощью asp-items*@
             <select asp-for="Employee.DepartmentId" asp-items="@Model.DepartmentSelectLists" class="form-control">
             </select>
             <span asp-validation-for="Employee.DepartmentId" class="text-danger"></span>
