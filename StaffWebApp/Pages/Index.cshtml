@@ -29,7 +29,7 @@
                         <td>@items.Name</td>
                         <td>@items.LastName</td>
                         <td>@items.Patronymic</td>
-                        <td>@items.DateOfBirthday.ToString("MM.dd.yyyy")</td>
+                        <td>@items.DateOfBirthday.ToString("dd.MM.yyyy")</td>
                         <td>@items.Location</td>
                         <td>@items.Department.Name</td>
                         <td><a asp-page="CreateOrEdit" asp-page-handler="ById" asp-route-id="@items.Id" class="btn btn-primary">Редактировать</a></td>
