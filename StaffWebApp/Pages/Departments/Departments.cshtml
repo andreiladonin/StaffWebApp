@@ -1,4 +1,4 @@
-﻿@page "/departments"
+﻿@page "/departments/"
 @model StaffWebApp.Pages.DepartamentModel
 @{
     <h2 class="mb-5" >Отделы</h2>
@@ -25,7 +25,7 @@
                         <td><a asp-page="CreateOrEdit" asp-page-handler="ById" asp-route-id="@items.Id" class="btn btn-primary">Редактировать</a></td>
                         <td>
                             <form method='post'>
-                              <button type="submit" asp-page-handler="delete" asp-route-id="@items.Id" class="btn btn-danger">Удалить</button>
+                              <button type="submit" onclick="return deleteDepartament(); " asp-page-handler="delete" asp-route-id="@items.Id" class="btn btn-danger">Удалить</button>
                             </form>
                         </td>
                     </tr>
@@ -36,4 +36,17 @@
     {
         <p>Нет Данных</p>
     }
+}
+@section Scripts {
+
+    <script>
+        function deleteDepartament() {
+
+            let deleteDepartament = confirm("Вы уверены если удалить отдел, пропадут сотрудники?")
+            if (!deleteDepartament) {
+                return false;
+            }
+            return true;
+        }
+    </script>
 }

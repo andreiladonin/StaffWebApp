@@ -6,6 +6,7 @@ using StaffWebApp.Context;
 using StaffWebApp.Models;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 
 namespace StaffWebApp.Pages
@@ -14,30 +15,31 @@ namespace StaffWebApp.Pages
     {
         private readonly StaffDbContext _db;
         public List<Employee> Employees { get; set; }
-        public readonly List<SelectListItem> DepartmentSelectLists;
+        public readonly List<SelectListItem> DepartmentSelectLists = new();
 
         public IndexModel(StaffDbContext db)
         {
             _db = db;
-            DepartmentSelectLists = _db.Departments.Select(i => new SelectListItem
-            {
-                Text = i.Name,
-                Value = i.Id.ToString()
-            }).ToList();
             DepartmentSelectLists.Add(new SelectListItem
             {
                 Text = "Все",
-                Value = 0.ToString()
-            }) ;
+                Value = "0"
+            });
+            DepartmentSelectLists.AddRange(_db.Departments.Select(i => new SelectListItem
+            {
+                Text = i.Name,
+                Value = i.Id.ToString()
+            }).ToList());
         }
 
         public void OnGet()
         {
-            Employees = _db.Employees.Include(e => e.Department).ToList();
+            Employees = _db.Employees.Include(e => e.Department).OrderBy(e => e.Id).ToList();
         }
 
-        public void OnGetFilter(string name, string last_name, int? department, SortState sort = SortState.Default)
+        public void OnGetFilter(string name, string last_name, int? department, string adress, SortState sort = SortState.Default)
         {
+            TextInfo ti = CultureInfo.CurrentCulture.TextInfo;
             IQueryable<Employee> employees = _db.Employees.Include(e => e.Department);
             if (department != null && department != 0)
             {
@@ -45,11 +47,15 @@ namespace StaffWebApp.Pages
             }
             if (!String.IsNullOrEmpty(name))
             {
-                employees = employees.Where(p => p.Name.Contains(name));
+                employees = employees.Where(p => p.Name.Contains(ti.ToTitleCase(name)));
             }
             if (!String.IsNullOrEmpty(last_name))
             {
-                employees = employees.Where(p => p.LastName.Contains(last_name));
+                employees = employees.Where(p => p.LastName.Contains(ti.ToTitleCase(last_name)));
+            }
+            if (!String.IsNullOrEmpty(adress))
+            {
+                employees = employees.Where(p => p.Location.Contains(ti.ToTitleCase(adress)));
             }
 
             employees = sort switch
@@ -57,7 +63,7 @@ namespace StaffWebApp.Pages
                 SortState.NameAsc => employees.OrderBy(e => e.Name),
                 SortState.LastNameAsc => employees.OrderBy(e => e.LastName),
                 SortState.DepartmentAsc => employees.OrderBy(e => e.Department.Name),
-                SortState.Default => employees
+                SortState.Default => employees.OrderBy(e=> e.Id)
             };
 
 

@@ -4,15 +4,14 @@
     <h2 class="mb-5">Главная Страница</h2>
 
     <a asp-page="CreateOrEdit" asp-route-id="" class="btn btn-primary mb-5">Добавить нового сотрудника</a>
-
-    @if (@Model.Employees.Count != 0)
-    {
-        <form method="get">
+    <form method="get">
             <div class="form-inline form-group">
                 <label class="control-label">Имя: </label>
                 <input name="name" class="form-control" />
                 <label class="control-label">Фамилия: </label>
                 <input name="last_name" class="form-control" />
+                <label class="control-label">Адрес: </label>
+                <input name="adress" class="form-control" />
                 <label class="control-label">Отдел: </label>
                 <select name="department" asp-items="@Model.DepartmentSelectLists" class="form-control"></select>
                 <p>Сортировка</p>
@@ -37,6 +36,8 @@
                 <button asp-page-handler="Filter" type="submit" class="btn btn-primary">Поиск</button>
             </div>
         </form>
+    @if (@Model.Employees.Count != 0)
+    {
         <table class="table table-info mt-4">
             <thead>
                 <tr>
@@ -65,7 +66,7 @@
                         <td><a asp-page="CreateOrEdit" asp-page-handler="ById" asp-route-id="@items.Id" class="btn btn-primary">Редактировать</a></td>
                         <td>
                             <form method='post'>
-                              <button type="submit" asp-page-handler="delete" asp-route-id="@items.Id" class="btn btn-danger">Удалить</button>
+                              <button type="submit" onclick="return deleteEmployee(); " asp-page-handler="delete" asp-route-id="@items.Id" class="btn btn-danger">Удалить</button>
                             </form>
                         </td>
                     </tr>
@@ -76,4 +77,18 @@
     {
         <p>Нет Данных</p>
     }
+}
+
+@section Scripts {
+
+    <script>
+        function deleteEmployee() {
+
+            let deleteEmployee = confirm("Вы уверены если удалить сотрудника?")
+            if (!deleteEmployee) {
+                return false;
+            }
+            return true;
+        }
+    </script>
 }
